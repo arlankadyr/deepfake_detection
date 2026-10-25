@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" content="#f5f6f8">
+    <title>Experiment results — DeepfakeCheck</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="/static/results.js" defer></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="DeepfakeCheck home"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M16 3.5 27 8v7.8c0 6.5-4.5 10.8-11 13-6.5-2.2-11-6.5-11-13V8l11-4.5Z"/><path d="m11.5 16.2 3 3 6.2-6.4"/></svg></span><span>Deepfake<span class="brand-light">Check</span></span></a>
+      <nav class="site-nav" aria-label="Main navigation"><a class="nav-link" href="/">Analyse</a><a class="nav-link active" href="/results">Results</a><a class="nav-link" href="/#about">About</a></nav>
+      <span class="research-tag"><span class="status-dot" aria-hidden="true"></span> Research demo</span>
+    </header>
+    <main class="results-main">
+      <section class="results-hero"><p class="eyebrow"><span class="eyebrow-line"></span> EXPERIMENT EXPLORER</p><h1>Results, when<br><span>they’re ready.</span></h1><p>Explore the reported performance of each model across training sizes, seeds and test sets.</p></section>
+      <section class="results-content" aria-labelledby="runs-title">
+        <div class="section-heading"><div><p class="eyebrow">01 / REPORTED RUNS</p><h2 id="runs-title">Experiment results</h2></div><p class="section-note" id="results-status" role="status">Loading experiment results…</p></div>
+        <div class="no-results panel" id="no-results" hidden><span class="empty-mark" aria-hidden="true">◌</span><h3>No experiment results yet</h3><p>Place the students’ experiment output in <code>results/metrics.json</code>. This page will read those measured results.</p></div>
+        <div id="results-dashboard" hidden>
+          <div class="filter-bar panel">
+            <div class="field-group"><label for="filter-model">Model</label><select id="filter-model"><option value="all">All models</option></select></div>
+            <div class="field-group"><label for="filter-test-set">Test set</label><select id="filter-test-set"><option value="all">All test sets</option></select></div>
+            <div class="field-group"><label for="filter-size">Training-set size</label><select id="filter-size"><option value="all">All sizes</option></select></div>
+            <span class="run-count" id="run-count"></span>
+          </div>
+          <div class="panel table-panel"><div class="panel-title-row"><div><p class="eyebrow">RUN-BY-RUN</p><h3>All experiment runs</h3></div></div><div class="table-scroll"><table><thead><tr><th scope="col">Model</th><th scope="col">Training size</th><th scope="col">Seed</th><th scope="col">Test set</th><th scope="col">AUC</th><th scope="col">Accuracy</th><th scope="col">F1</th></tr></thead><tbody id="runs-body"></tbody></table></div></div>
+          <div class="panel summary-panel"><div class="panel-title-row"><div><p class="eyebrow">ACROSS SEEDS</p><h3>Mean and standard deviation</h3></div><p class="section-note">Grouped by model, test set and training size</p></div><div class="table-scroll"><table><thead><tr><th scope="col">Model</th><th scope="col">Training size</th><th scope="col">Test set</th><th scope="col">AUC mean ± SD</th><th scope="col">Seeds</th></tr></thead><tbody id="summary-body"></tbody></table></div></div>
+
+          <div class="chart-section-heading"><p class="eyebrow">02 / PERFORMANCE PATTERNS</p><h2>Compare the experiments</h2><p>Charts are calculated from the metrics file. Error bars show standard deviation across available runs.</p></div>
+          <div class="chart-grid">
+            <article class="panel chart-card"><div class="chart-title"><span class="chart-index">01</span><div><h3>AUC by test set</h3><p>Grouped by model and training size</p></div></div><div class="chart-legend" id="auc-legend"></div><div class="chart-frame" id="auc-chart" role="img" aria-label="AUC by test set chart"></div></article>
+            <article class="panel chart-card"><div class="chart-title"><span class="chart-index">02</span><div><h3>AUC drop from BigGAN</h3><p>BigGAN baseline minus each other test set</p></div></div><div class="chart-legend" id="drop-legend"></div><div class="chart-frame" id="drop-chart" role="img" aria-label="AUC drop from BigGAN chart"></div></article>
+            <article class="panel chart-card chart-card-wide"><div class="chart-title"><span class="chart-index">03</span><div><h3>Learning curve</h3><p>AUC drop versus training-set size</p></div></div><div class="chart-legend" id="learning-legend"></div><div class="chart-frame" id="learning-chart" role="img" aria-label="Learning curve chart"></div></article>
+          </div>
+          <p class="chart-footnote"><span aria-hidden="true">i</span> AUC drop is calculated only where a BigGAN baseline and another test set share the same model, training size and seed. Missing comparisons are omitted.</p>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer"><a class="brand footer-brand" href="/"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M16 3.5 27 8v7.8c0 6.5-4.5 10.8-11 13-6.5-2.2-11-6.5-11-13V8l11-4.5Z"/><path d="m11.5 16.2 3 3 6.2-6.4"/></svg></span><span>Deepfake<span class="brand-light">Check</span></span></a><p>Research demonstration · Not a forensic tool</p><a href="/">Analyse an image <span aria-hidden="true">→</span></a></footer>
+  </body>
+</html>
