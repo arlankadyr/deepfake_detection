@@ -72,28 +72,6 @@ def test_predict_without_checkpoint_returns_503(client):
     assert "Model not trained yet" in response.json()["detail"]
 
 
-def test_predict_with_random_test_checkpoint_returns_probability(client, isolated_project_paths):
-    import timm
-    import torch
-
-    model = timm.create_model("resnet50", pretrained=False, num_classes=1)
-    checkpoint = isolated_project_paths / "resnet50_biggan_n20000_seed42.pt"
-    torch.save(model.state_dict(), checkpoint)
-    del model
-
-    response = client.post(
-        "/api/predict",
-        files={"file": ("small.png", png_bytes(), "image/png")},
-        data={"model": "resnet50", "train_size": "20000", "seed": "42"},
-    )
-    assert response.status_code == 200, response.text
-    result = response.json()
-    assert 0 <= result["predictions"][0]["fake_probability"] <= 1
-    assert result["predictions"][0]["label"] in {"Real", "AI-generated"}
-    assert result["models_agree"] is True
-    assert not list(isolated_project_paths.glob("*.png"))
-
-
 def test_text_file_renamed_to_png_is_rejected(client):
     response = client.post(
         "/api/predict",

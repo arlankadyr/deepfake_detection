@@ -163,7 +163,7 @@
       const value = yMin + ((yMax - yMin) * step) / 4;
       const yPos = y(value);
       svg.append(svgElement('line', { x1: margin.left, x2: width - margin.right, y1: yPos, y2: yPos, stroke: cssColor('--line'), 'stroke-width': 1 }));
-      svg.append(svgElement('text', { x: margin.left - 8, y: yPos + 3, 'text-anchor': 'end', fill: cssColor('--ink-faint'), 'font-size': 9, 'font-family': 'DM Mono, monospace' }, value.toFixed(2)));
+      svg.append(svgElement('text', { x: margin.left - 8, y: yPos + 3, 'text-anchor': 'end', fill: cssColor('--ink-faint'), 'font-size': 12, 'font-family': 'DM Mono, monospace' }, value.toFixed(2)));
     }
     svg.append(svgElement('line', { x1: margin.left, x2: margin.left, y1: margin.top, y2: height - margin.bottom, stroke: cssColor('--line-strong'), 'stroke-width': 1 }));
     svg.append(svgElement('line', { x1: margin.left, x2: width - margin.right, y1: zeroY, y2: zeroY, stroke: cssColor('--line-strong'), 'stroke-width': 1 }));
@@ -192,11 +192,11 @@
           svg.append(svgElement('line', { x1: capX - 3, x2: capX + 3, y1: highY, y2: highY, stroke: color, 'stroke-width': 1.3 }));
         }
       });
-      const label = svgElement('text', { x: center, y: height - margin.bottom + 15, 'text-anchor': 'middle', fill: cssColor('--ink-faint'), 'font-size': 9, 'font-family': 'DM Sans, sans-serif' });
+      const label = svgElement('text', { x: center, y: height - margin.bottom + 15, 'text-anchor': 'middle', fill: cssColor('--ink-faint'), 'font-size': 12, 'font-family': 'DM Sans, sans-serif' });
       labelLines(category.label).forEach((line, lineIndex) => label.append(svgElement('tspan', { x: center, dy: lineIndex === 0 ? 0 : 11 }, line)));
       svg.append(label);
     });
-    const axisLabel = svgElement('text', { x: 12, y: margin.top + chartHeight / 2, transform: `rotate(-90 12 ${margin.top + chartHeight / 2})`, 'text-anchor': 'middle', fill: cssColor('--ink-faint'), 'font-size': 9, 'font-family': 'DM Sans, sans-serif' }, yLabel);
+    const axisLabel = svgElement('text', { x: 12, y: margin.top + chartHeight / 2, transform: `rotate(-90 12 ${margin.top + chartHeight / 2})`, 'text-anchor': 'middle', fill: cssColor('--ink-faint'), 'font-size': 12, 'font-family': 'DM Sans, sans-serif' }, yLabel);
     svg.append(axisLabel);
     container.replaceChildren(svg);
   }
@@ -315,16 +315,16 @@
       const value = yMin + ((yMax - yMin) * step) / 4;
       const yPos = y(value);
       svg.append(svgElement('line', { x1: margin.left, x2: width - margin.right, y1: yPos, y2: yPos, stroke: cssColor('--line'), 'stroke-width': 1 }));
-      svg.append(svgElement('text', { x: margin.left - 8, y: yPos + 3, 'text-anchor': 'end', fill: cssColor('--ink-faint'), 'font-size': 9, 'font-family': 'DM Mono, monospace' }, value.toFixed(2)));
+      svg.append(svgElement('text', { x: margin.left - 8, y: yPos + 3, 'text-anchor': 'end', fill: cssColor('--ink-faint'), 'font-size': 12, 'font-family': 'DM Mono, monospace' }, value.toFixed(2)));
     }
     svg.append(svgElement('line', { x1: margin.left, x2: width - margin.right, y1: y(0), y2: y(0), stroke: cssColor('--line-strong'), 'stroke-width': 1 }));
     sizes.forEach((size) => {
       const xPos = x(size);
       svg.append(svgElement('line', { x1: xPos, x2: xPos, y1: height - margin.bottom, y2: height - margin.bottom + 4, stroke: cssColor('--line-strong'), 'stroke-width': 1 }));
-      svg.append(svgElement('text', { x: xPos, y: height - margin.bottom + 17, 'text-anchor': 'middle', fill: cssColor('--ink-faint'), 'font-size': 9, 'font-family': 'DM Mono, monospace' }, formatSize(size)));
+      svg.append(svgElement('text', { x: xPos, y: height - margin.bottom + 17, 'text-anchor': 'middle', fill: cssColor('--ink-faint'), 'font-size': 12, 'font-family': 'DM Mono, monospace' }, formatSize(size)));
     });
     svg.append(svgElement('line', { x1: margin.left, x2: width - margin.right, y1: height - margin.bottom, y2: height - margin.bottom, stroke: cssColor('--line-strong'), 'stroke-width': 1 }));
-    svg.append(svgElement('text', { x: margin.left + chartWidth / 2, y: height - 8, 'text-anchor': 'middle', fill: cssColor('--ink-faint'), 'font-size': 9, 'font-family': 'DM Sans, sans-serif' }, 'Training-set size'));
+    svg.append(svgElement('text', { x: margin.left + chartWidth / 2, y: height - 8, 'text-anchor': 'middle', fill: cssColor('--ink-faint'), 'font-size': 12, 'font-family': 'DM Sans, sans-serif' }, 'Training-set size'));
 
     models.forEach((model) => {
       const points = [...grouped.get(model).entries()].sort((left, right) => left[0] - right[0]);

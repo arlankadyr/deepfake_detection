@@ -1,90 +1,55 @@
 # DeepfakeCheck
 
-DeepfakeCheck is a small demonstration and results viewer for a university research project. It compares a ResNet-50 and a DeiT-S classifier fine-tuned on the GenImage BigGAN subset. The models are intended to be evaluated on diffusion-generated images.
+DeepfakeCheck is a research demo for comparing two image classifiers: ResNet-50 and DeiT-S. It provides image inference when a matching trained checkpoint is available and displays the experiment metrics recorded in `results/metrics.json`.
 
-This app displays model outputs and experiment metrics; it does not run the evaluation itself. A model prediction is not forensic proof.
+Model outputs are predictions from the selected checkpoint, not forensic proof. The Results page reports measured experiment values; the app does not invent or recalculate those results.
 
-## Requirements
+## Current experiment files
 
-- Python 3.11
-- Windows, macOS, or Linux
-- An internet connection for the first package installation
+The project includes the supplied ResNet-50 and DeiT-S checkpoints for training size 2,000 and seed 42, plus eight measured runs in `results/metrics.json` (two models evaluated on BigGAN, SD 1.4, ADM, and Midjourney test sets). These are committed as ordinary Git files so a deployment can download them with the repository.
 
-The pinned PyTorch packages use CPU wheels by default, so this setup runs on CPU. For GPU inference, install matching CUDA builds of both `torch` and `torchvision` for your machine; the app will select CUDA automatically when it is available.
+The GitHub repository is public, so the committed metrics and model checkpoints are publicly downloadable. Do not commit private data or images.
 
-## Set up and start
+## Run locally
 
-Open a terminal in this `deepfakecheck` folder and create a virtual environment:
+Requirements: Python 3.11 and an internet connection for package installation. The pinned PyTorch dependencies use CPU builds.
+
+On Windows, open PowerShell in this folder and run:
 
 ```powershell
 py -3.11 -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install -r requirements.txt
+uvicorn app.main:app --reload
 ```
 
-On macOS or Linux, use these activation commands instead:
+On macOS or Linux:
 
 ```bash
 python3.11 -m venv .venv
 source .venv/bin/activate
 python -m pip install -r requirements.txt
-```
-
-Start the server from this folder:
-
-```bash
 uvicorn app.main:app --reload
 ```
 
-Open <http://127.0.0.1:8000>. The API health check is at <http://127.0.0.1:8000/api/health>.
+Open <http://127.0.0.1:8000>. The results API is at <http://127.0.0.1:8000/api/results> and the health check is at <http://127.0.0.1:8000/api/health>.
 
-## Add trained checkpoints
-
-Place each student-produced PyTorch `state_dict` in `checkpoints/`, using this exact filename pattern:
-
-```text
-{model}_biggan_n{size}_seed{seed}.pt
-```
-
-For example, a run for the ResNet-50 model with training size 20,000 and seed 42 is named `resnet50_biggan_n20000_seed42.pt`. Model names are `resnet50` and `deit_small`; supported training sizes are 20000, 10000, 5000, and 2000. Restart the server after adding or replacing checkpoints. The startup log reports the number of available runs for each model.
-
-The checkpoints must contain a `state_dict` for the matching `timm` model, created as `resnet50` or `deit_small_patch16_224` with `num_classes=1`. No pretrained or sample checkpoints are included.
-
-If the selected checkpoint is missing, the prediction endpoint returns HTTP 503 with a “Model not trained yet” message. It never substitutes a made-up prediction.
-
-## Add experiment metrics
-
-Save the students' metrics JSON at `results/metrics.json`. The Results page reads the file when opened. Its expected structure is:
-
-```json
-{
-  "runs": [
-    {
-      "model": "resnet50",
-      "train_size": 20000,
-      "seed": 42,
-      "test_set": "biggan",
-      "auc": 0.0,
-      "accuracy": 0.0,
-      "f1": 0.0
-    }
-  ]
-}
-```
-
-The values above describe the file format only; replace them with measured experiment results. No metrics file is included. If it is missing, the Results page says “No experiment results yet”.
-
-## Privacy and image validation
-
-Only JPEG, PNG, and WebP uploads up to 10 MB are accepted. The request body and multipart file remain in memory, are decoded for the prediction, and are discarded when the request finishes. Uploaded images and their filenames are not written to disk or logged.
-
-## Run the tests
-
-With the virtual environment activated, run:
+## Run tests
 
 ```bash
 pytest
 ```
 
-The tests check the health endpoint, missing-checkpoint behavior, inference from a temporary randomly initialized test checkpoint, invalid and oversized uploads, and the missing-results response.
+The tests cover the health endpoint, model inventory, missing-checkpoint behavior, invalid and oversized uploads, page loading, and the missing-results response.
 
+## Deploy for a teammate
+
+`render.yaml` configures a Render Docker web service named `deepfakecheck`, with `/api/health` as its health check. Connect the public GitHub repository to Render and deploy from `main`. The configured instance is 1 CPU / 2 GB RAM because the service loads PyTorch and the selected checkpoint during inference. Render's paid plan charges apply; check the current plan price in Render before creating the service.
+
+After deployment, Render provides a public `*.onrender.com` URL that can be shared with a teammate. The free service tier may not have enough memory for model inference and can sleep while idle, so it is not the configured option.
+
+## Upload privacy and behavior
+
+The app accepts JPEG, PNG, and WebP images up to 10 MB. Request bytes and decoded images are kept in memory for the request and discarded afterward. The app does not write uploaded images or filenames to disk or log them.
+
+The prediction endpoint uses only a checkpoint matching the selected model, training size, and seed. If a matching checkpoint is unavailable, it responds with “Model not trained yet”; it never substitutes a fabricated prediction.

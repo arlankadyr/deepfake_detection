@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: deepfakecheck
+    runtime: docker
+    plan: 1c-2g
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/health

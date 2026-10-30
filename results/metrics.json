@@ -1,0 +1,108 @@
+{
+ "runs": [
+  {
+   "model": "resnet50",
+   "train_size": 2000,
+   "seed": 42,
+   "test_set": "biggan",
+   "lr": 0.0001,
+   "val_auc": 0.9886836836836838,
+   "auc": 0.9950402499999998,
+   "accuracy": 0.9685,
+   "precision": 0.967564870259481,
+   "recall": 0.9695,
+   "f1": 0.9685314685314685
+  },
+  {
+   "model": "resnet50",
+   "train_size": 2000,
+   "seed": 42,
+   "test_set": "sd14",
+   "lr": 0.0001,
+   "val_auc": 0.9886836836836838,
+   "auc": 0.6172933749999999,
+   "accuracy": 0.50075,
+   "precision": 0.5102040816326531,
+   "recall": 0.0375,
+   "f1": 0.06986492780624126
+  },
+  {
+   "model": "resnet50",
+   "train_size": 2000,
+   "seed": 42,
+   "test_set": "adm",
+   "lr": 0.0001,
+   "val_auc": 0.9886836836836838,
+   "auc": 0.7299776250000001,
+   "accuracy": 0.5635,
+   "precision": 0.8143564356435643,
+   "recall": 0.1645,
+   "f1": 0.2737104825291181
+  },
+  {
+   "model": "resnet50",
+   "train_size": 2000,
+   "seed": 42,
+   "test_set": "midjourney",
+   "lr": 0.0001,
+   "val_auc": 0.9886836836836838,
+   "auc": 0.6397012499999999,
+   "accuracy": 0.51075,
+   "precision": 0.612565445026178,
+   "recall": 0.0585,
+   "f1": 0.10680054769511639
+  },
+  {
+   "model": "deit_small",
+   "train_size": 2000,
+   "seed": 42,
+   "test_set": "biggan",
+   "lr": 0.0001,
+   "val_auc": 0.9986286286286287,
+   "auc": 0.999389,
+   "accuracy": 0.98375,
+   "precision": 0.9953917050691244,
+   "recall": 0.972,
+   "f1": 0.9835567923096382
+  },
+  {
+   "model": "deit_small",
+   "train_size": 2000,
+   "seed": 42,
+   "test_set": "sd14",
+   "lr": 0.0001,
+   "val_auc": 0.9986286286286287,
+   "auc": 0.5205096250000001,
+   "accuracy": 0.49825,
+   "precision": 0.18181818181818182,
+   "recall": 0.001,
+   "f1": 0.001989060169070114
+  },
+  {
+   "model": "deit_small",
+   "train_size": 2000,
+   "seed": 42,
+   "test_set": "adm",
+   "lr": 0.0001,
+   "val_auc": 0.9986286286286287,
+   "auc": 0.64383375,
+   "accuracy": 0.52825,
+   "precision": 0.937984496124031,
+   "recall": 0.0605,
+   "f1": 0.11366838891498356
+  },
+  {
+   "model": "deit_small",
+   "train_size": 2000,
+   "seed": 42,
+   "test_set": "midjourney",
+   "lr": 0.0001,
+   "val_auc": 0.9986286286286287,
+   "auc": 0.6134475,
+   "accuracy": 0.50125,
+   "precision": 0.6190476190476191,
+   "recall": 0.0065,
+   "f1": 0.012864918357248886
+  }
+ ]
+}
